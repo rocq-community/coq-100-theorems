@@ -133,7 +133,7 @@
 
 - theorem: 11
   authors: Russell O'Connor
-  link: https://coq.inria.fr/cocorico/NotFinitePrimes
+  link: https://web.archive.org/web/20151210214004/coq.inria.fr/cocorico/NotFinitePrimes
   comment: This statement was formerly in cocorico, compatible with Coq 7.3
   statement: |
     Theorem ManyPrimes : ~(EX l:(list Prime) | (p:Prime)(In p l)).
@@ -194,7 +194,7 @@
 
 - theorem: 15
   authors: The Coq development team
-  link: https://coq.inria.fr/library/Coq.Reals.RiemannInt.html
+  link: https://rocq-prover.org/doc/V9.0.0/stdlib/Stdlib.Reals.RiemannInt.html
   statement: |
     Lemma FTC_Riemann :
       forall (f:C1_fun) (a b:R) (pr:Riemann_integrable (derive f (diff0 f)) a b),
@@ -347,7 +347,7 @@
 
 - theorem: 26
   authors: Guillaume Allais
-  link: https://coq.inria.fr/library/Coq.Reals.Ratan.html
+  link: https://rocq-prover.org/doc/V9.0.0/stdlib/Stdlib.Reals.Ratan.html
   statement: |
     Lemma PI_2_aux : {z : R | 7 / 8 <= z <= 7 / 4 /\ - cos z = 0}.
     Definition PI := 2 * proj1_sig PI_2_aux.
@@ -636,7 +636,7 @@
 
 - theorem: 44
   authors: The Coq development team
-  link: https://coq.inria.fr/library/Coq.Reals.Binomial.html
+  link: https://rocq-prover.org/doc/V9.0.0/stdlib/Stdlib.Reals.Binomial.html
   comment: For the non-constructive type R
   statement: |
     Lemma binomial :
@@ -860,7 +860,7 @@
 
 - theorem: 60
   authors: The Coq development team
-  link: https://coq.inria.fr/library/Coq.ZArith.Znumtheory.html
+  link: https://rocq-prover.org/doc/V9.0.0/stdlib/Stdlib.ZArith.Znumtheory.html
   statement: |
     Inductive Zdivide (a b:Z) : Prop :=
       Zdivide_intro : forall q:Z, b = q * a -> Zdivide a b.
@@ -978,7 +978,7 @@
 
 - theorem: 63
   authors: Gilles Kahn, Gerard Huet
-  link: https://coq.inria.fr/library/Coq.Sets.Powerset.html
+  link: https://rocq-prover.org/doc/V9.0.0/stdlib/Stdlib.Sets.Powerset.html
   comment: Naive Set Theory in Coq
   statement: |
     Theorem Strict_Rel_is_Strict_Included :
@@ -1081,7 +1081,7 @@
 
 - theorem: 69
   authors: The Coq development team
-  link: https://coq.inria.fr/library/Coq.ZArith.Znumtheory.html
+  link: https://rocq-prover.org/doc/V9.0.0/stdlib/Stdlib.ZArith.Znumtheory.html
   comment: The following statement handle binary integers; other types are handled in the same file.
   statement: |
     Fixpoint Pgcdn (n: nat) (a b : positive) : positive :=
@@ -1170,7 +1170,7 @@
 
 - theorem: 74
   authors: Coq's type theory
-  link: https://coq.inria.fr/library/Coq.Init.Datatypes.html
+  link: https://rocq-prover.org/doc/V9.0.0/stdlib/Stdlib.Init.Datatypes.html
   comment: The induction principle is automatically provided by Coq when defining unary natural numbers.
   statement: |
     Inductive nat : Set :=  O : nat | S : nat -> nat.
@@ -1186,7 +1186,7 @@
 
 - theorem: 74
   authors: The Coq development team
-  link: https://coq.inria.fr/library/Coq.NArith.BinNat.html#N.peano_rect
+  link: https://rocq-prover.org/doc/V9.0.0/stdlib/Stdlib.NArith.BinNat.html#N.peano_rect
   comment: Peano's induction principle is manually proved for binary natural integers.
   statement: |
     peano_rect : forall (P : N -> Type),
@@ -1242,7 +1242,7 @@
 
 - theorem: 79
   authors: The Coq development team
-  link: https://coq.inria.fr/library/Coq.Reals.Rsqrt_def.html
+  link: https://rocq-prover.org/doc/V9.0.0/stdlib/Stdlib.Reals.Rsqrt_def.html
   comment: non constructive version in Coq's standard library
   statement: |
     Lemma IVT_cor :
