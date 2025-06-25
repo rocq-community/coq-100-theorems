@@ -40,41 +40,51 @@ Fixpoint collision l :=
   | x :: l => if appears x l then true else collision l
   end.
 
-Fixpoint enumerate n :=
-  match n with
-  | 0 => []
-  | S n => n :: enumerate n
-  end.
-
-Lemma length_enumerate n : length (enumerate n) = n.
-Proof.
-  induction n; simpl; congruence.
-Qed.
-
-Lemma filter_app {A} f (l1 l2 : list A) :
-  filter f (l1 ++ l2) = filter f l1 ++ filter f l2.
-Proof.
-  induction l1 as [| a l IHl]; simpl. reflexivity.
-  destruct (f a); simpl; congruence.
-Qed.
-
-Fixpoint cartesian_product {A B} (xs : list A) (ys : list B) : list (A * B) :=
-  match xs with
-  | [] => []
-  | x :: xs => map (pair x) ys ++ cartesian_product xs ys
-  end.
+Definition enumerate n := seq 0 n.
 
 Fixpoint picks {A} n (l : list A) : list (list A) :=
   match n with
   | O => [[]]
-  | S n => map (fun x => fst x :: snd x) (cartesian_product l (picks n l))
+  | S n => map (fun x => fst x :: snd x) (list_prod l (picks n l))
   end.
 
-Lemma length_cartesian_product {A B} (xs : list A) (ys : list B) :
-  length (cartesian_product xs ys) = length xs * length ys.
+Lemma appears_In_iff x l:
+  In x l <-> appears x l = true.
 Proof.
-  induction xs. reflexivity. simpl.
-  rewrite app_length, map_length. congruence.
+  induction l as [|a l IH]; [easy|].
+  cbn. rewrite IH.
+  destruct (Nat.eq_decidable x a) as [->|E].
+  - rewrite Nat.eqb_refl. tauto.
+  - assert (x =?a = false) as ->
+      by (apply Nat.eqb_neq; assumption).
+    apply not_eq_sym in E. tauto.
+Qed.
+
+Corollary appears_false_iff x l:
+  ~ In x l <-> appears x l = false.
+Proof.
+  destruct (appears x l) eqn:H.
+  - apply appears_In_iff in H.
+    split; [contradiction|discriminate].
+  - split; [reflexivity|].
+    intros _ E%appears_In_iff.
+    rewrite H in E. discriminate.
+Qed.
+
+Lemma collision_NoDup_iff l:
+  NoDup l <-> collision l = false.
+Proof.
+  split; intro H.
+  - induction H; [reflexivity|].
+    cbn. destruct (appears x l) eqn:E.
+    + apply appears_In_iff in E. contradiction.
+    + assumption.
+  - induction l as [|a l IH]; [constructor|].
+    cbn in H. destruct (appears a l) eqn:E.
+    + discriminate H.
+    + constructor.
+      * apply appears_false_iff. assumption.
+      * apply IH. assumption.
 Qed.
 
 Lemma Zlength_picks {A} n (l : list A) :
@@ -82,13 +92,13 @@ Lemma Zlength_picks {A} n (l : list A) :
 Proof.
   rewrite Zlength_correct.
   induction n. reflexivity. simpl (length _).
-  rewrite map_length, length_cartesian_product.
+  rewrite map_length, prod_length.
   change (S n) with (1 + n).
   rewrite Nat2Z.inj_add, Z.pow_add_r, Z.pow_1_r.
   rewrite <-IHn.
   rewrite Nat2Z.inj_mul, Zlength_correct.
   reflexivity.
-  all: zify; lia.
+  all: lia.
 Qed.
 
 Fixpoint partial_fact k n (* = n! / (n-k)! *) :=
@@ -100,8 +110,8 @@ Fixpoint partial_fact k n (* = n! / (n-k)! *) :=
 Definition no {A} (f : A -> bool) x := negb (f x).
 
 Lemma cartesian_product_filters {A B} (f : A -> bool) (g : B -> bool) xs ys :
-  cartesian_product (filter f xs) (filter g ys) =
-  filter (fun p => andb (f (fst p)) (g (snd p))) (cartesian_product xs ys).
+  list_prod (filter f xs) (filter g ys) =
+  filter (fun p => andb (f (fst p)) (g (snd p))) (list_prod xs ys).
 Proof.
   revert ys.
   induction xs; intros ys; auto.
@@ -128,7 +138,7 @@ Proof.
   simpl. rewrite IHk. clear IHk.
   generalize (picks k l); intros ll.
   rewrite cartesian_product_filters.
-  induction (cartesian_product l ll) as [| a0 l0 IHl0]. simpl. reflexivity.
+  induction (list_prod l ll) as [| a0 l0 IHl0]. simpl. reflexivity.
   simpl.
   rewrite <-IHl0.
   unfold no.
@@ -141,50 +151,23 @@ Qed.
 Lemma appears_filter x l f :
   appears x l = false -> appears x (filter f l) = false.
 Proof.
-  induction l. reflexivity.
-  simpl.
-  destruct (f a); simpl; destruct (x =? a); auto.
-  discriminate.
+  intros H%appears_false_iff. apply appears_false_iff.
+  intros E%filter_In. tauto.
 Qed.
 
 Lemma collision_filter l f :
   collision l = false -> collision (filter f l) = false.
 Proof.
-  induction l. reflexivity.
-  simpl.
-  destruct (appears a l) eqn:E1. discriminate.
-  intros E2.
-  destruct (f a). simpl in *. rewrite appears_filter; auto.
-  auto.
+  intros H%collision_NoDup_iff. apply collision_NoDup_iff.
+  apply NoDup_filter. assumption.
 Qed.
 
 Lemma collision_count l :
   collision l = false -> Forall (fun x1 : nat => count_occ Nat.eq_dec l x1 = 1) l.
 Proof.
-  change (collision ([] ++ l) = false -> Forall (fun x1 : nat => count_occ Nat.eq_dec ([] ++ l) x1 = 1) l).
-  generalize ([] : list nat).
-  induction l; intros pre Hcol. constructor.
-  constructor.
-  - clear -Hcol.
-    induction pre as [| b pre IHpre].
-    + simpl in *.
-      destruct (Nat.eq_dec a a) as [ _ | ]; [ | tauto ].
-      f_equal.
-      destruct (appears a l) eqn:Ha. discriminate. clear Hcol.
-      induction l as [|b l IHl]. reflexivity. simpl.
-      destruct (Nat.eq_dec b a).
-      * subst. simpl in Ha. rewrite Nat.eqb_refl in Ha. discriminate.
-      * apply IHl. simpl in Ha. destruct (a =? b); auto; discriminate.
-    + simpl in *.
-      destruct (appears b (pre ++ a :: l)) eqn:Eb. discriminate.
-      rewrite IHpre; auto.
-      destruct (Nat.eq_dec b a); auto. subst.
-      cut (appears a (pre ++ a :: l) = true). congruence. clear.
-      induction pre as [|b pre IHpre]. simpl. rewrite Nat.eqb_refl. reflexivity.
-      simpl. destruct (a =? b); auto.
-  - assert (E : pre ++ a :: l = (pre ++ a :: nil) ++ l).
-    { rewrite <-app_assoc. reflexivity. }
-    rewrite E. apply IHl. congruence.
+  intros H%collision_NoDup_iff.
+  apply Forall_forall. intros x Hx.
+  apply NoDup_count_occ'; assumption.
 Qed.
 
 Lemma length_no_collision_picks k l :
@@ -255,6 +238,7 @@ Proof.
     destruct (collision l'); simpl; congruence.
 Qed.
 
+(* TODO: lemma filter_length in Coq 8.18 *)
 Lemma length_filter {A} (f : A -> bool) l :
   length (filter f l) + length (filter (no f) l) = length l.
 Proof.
@@ -267,24 +251,11 @@ Lemma Zlength_filter {A} (f : A -> bool) l :
   (Zlength (filter f l) = Zlength l - Zlength (filter (no f) l))%Z.
 Proof.
   repeat rewrite Zlength_correct.
-  rewrite <-(length_filter f l).
-  zify. lia.
+  rewrite <-(length_filter f l). lia.
 Qed.
 
 Lemma enumerate_no_collisions n : collision (enumerate n) = false.
-Proof.
-  induction n. reflexivity. simpl. rewrite IHn.
-  cut (forall a b, a <= b -> appears b (enumerate a) = false).
-  { intros ->; auto. }
-  clear.
-  intros a. induction a; intros b Hb.
-  - reflexivity.
-  - simpl. rewrite IHa. 2:lia.
-    replace (b =? a) with false; auto.
-    symmetry.
-    apply Nat.eqb_neq.
-    lia.
-Qed.
+Proof. apply collision_NoDup_iff, seq_NoDup. Qed.
 
 Theorem birthday_paradox :
   let l := picks 23 (enumerate 365) in
@@ -295,7 +266,8 @@ Proof.
   rewrite Nat2Z.inj_mul.
   repeat rewrite <-Zlength_correct.
   rewrite Zlength_filter.
-  rewrite length_no_collision_picks. 2:apply enumerate_no_collisions.
+  rewrite length_no_collision_picks
+    by apply enumerate_no_collisions.
   repeat rewrite Zlength_picks.
   reflexivity.
 Qed.
@@ -309,7 +281,8 @@ Proof.
   rewrite Nat2Z.inj_mul.
   repeat rewrite <-Zlength_correct.
   rewrite Zlength_filter.
-  rewrite length_no_collision_picks. 2:apply enumerate_no_collisions.
+  rewrite length_no_collision_picks
+    by apply enumerate_no_collisions.
   repeat rewrite Zlength_picks.
   reflexivity.
 Qed.
