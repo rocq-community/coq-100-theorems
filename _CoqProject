@@ -6,6 +6,7 @@ ballot.v
 birthday.v
 cardan_ferrari.v
 div3.v
+euler_partition.v
 inclusionexclusion.v
 konigsberg_bridges.v
 mean.v
