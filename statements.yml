@@ -674,6 +674,18 @@
   constructive: yes
   axioms: []
 
+- theorem: 45
+  authors: Keisuke Nakano
+  link: https://github.com/ksk/coq-100-theorems/blob/master/euler_partition.v
+  comment: By defining the set of partitions as finType
+  statement: |
+    Theorem Euler's_Partition (n : nat) :
+      #| [set s : partition n | uniq s ] | =
+      #| [set s : partition n | all odd s ] |.
+  reproducibility: last checked May 2025 with Coq 8.19.2 and August 2025 Rocq 9.0.0
+  constructive: yes
+  axioms: []
+
 - theorem: 46
   authors: Frédéric Chardard
   link: https://github.com/coq-community/coq-100-theorems/blob/master/cardan_ferrari.v

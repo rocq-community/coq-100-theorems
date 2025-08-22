@@ -25,7 +25,7 @@
         This is an appendix to Freek
         Wiedijk's <a href="http://www.cs.ru.nl/~freek/100/">webpage</a> webpage
         on the "top 100" mathematical theorems, to keep track of the statements
-        of the 79 theorems that are formalised in Rocq (formerly Coq).
+        of the 80 theorems that are formalised in Rocq (formerly Coq).
       </p>
       <p>
         Drop me or Freek an email or
@@ -979,8 +979,20 @@ Theorem Newton : forall n a b, (a + b) ^ n == newton_sum n a b.
 <p class='axioms'>Axioms used: (none)</p>
 <p class='existing'>Formalized in: ACL2, Coq (constructive), HOL Light, Isabelle, Lean, Metamath, Mizar, NuPRL (constructive), ProofPower</p></div>
 
-<h3 id='45' class='notformalizedyet'><a href='http://www.cs.ru.nl/~freek/100/#45'>45. The Partition Theorem</a></h3>
+<h3 id='45' class='formalized'><a href='http://www.cs.ru.nl/~freek/100/#45'>45. The Partition Theorem</a></h3>
 <div>
+
+<p class='author'><strong>Keisuke Nakano</strong>
+  (in <a href="https://github.com/ksk/coq-100-theorems/blob/master/euler_partition.v">https://github.com/ksk/coq-100-theorems/blob/master/euler_partition.v</a>):
+</p>
+<p class='comment'>By defining the set of partitions as finType</p>
+<pre class='statement'>Theorem Euler&#039;s_Partition (n : nat) :
+  #| [set s : partition n | uniq s ] | =
+  #| [set s : partition n | all odd s ] |.
+</pre>
+<p class='repro'>Reproducibility: last checked May 2025 with Coq 8.19.2 and August 2025 Rocq 9.0.0</p>
+<p class='axioms'>Constructive: yes</p>
+<p class='axioms'>Axioms used: (none)</p>
 <p class='existing'>Formalized in: HOL Light, Isabelle, Lean, Metamath, Mizar</p></div>
 
 <h3 id='46' class='formalized'><a href='http://www.cs.ru.nl/~freek/100/#46'>46. The Solution of the General Quartic Equation</a></h3>
@@ -2238,13 +2250,13 @@ Lemma mul_adj_mx : forall n (A : &#039;M[R]_n), \adj A *m A = (\det A)%:M.
         sheets[field].disabled = checkbox.checked
       }
       var stats = {
-        "formalized_in_coq": 79,
-        "nb_statements": 97,
-        "nb_reproducibility_info": 94,
-        "nb_axioms_info": 94,
-        "nb_constructive_info": 94,
+        "formalized_in_coq": 80,
+        "nb_statements": 98,
+        "nb_reproducibility_info": 95,
+        "nb_axioms_info": 95,
+        "nb_constructive_info": 95,
         "constructivity_values": {
-          "yes": 48,
+          "yes": 49,
           "no": 41,
           "hypotheses partially classical": 3,
           "to be determined": 1,
@@ -2261,6 +2273,7 @@ Lemma mul_adj_mx : forall n (A : &#039;M[R]_n), \adj A *m A = (\det A)%:M.
           27,
           30,
           32,
+          45,
           49,
           54,
           58,
