@@ -1268,6 +1268,13 @@
   constructive: yes
   axioms: []
 
+- theorem: 81
+  authors: Lucas Malaizier and Quentin Vermande
+  link: https://github.com/Tragicus/analysis/blob/5515349723a482acb1450ee77108dc995563344c/theories/showcase/pnt.v#L412-L413
+  statement: |
+    Theorem dvg_sum_inv_prime_seq (R : realType) :
+      (\sum_(0 <= i < n) (((prime_seq i)%:R : R)^-1)%:E)%R @[n --> \oo] --> +oo%E.
+
 - theorem: 83
   authors: Alex Loiko
   link: https://github.com/aleloi/coq-friendship-theorem

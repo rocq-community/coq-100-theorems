@@ -25,7 +25,7 @@
         This is an appendix to Freek
         Wiedijk's <a href="http://www.cs.ru.nl/~freek/100/">webpage</a> webpage
         on the "top 100" mathematical theorems, to keep track of the statements
-        of the 79 theorems that are formalised in Rocq (formerly Coq).
+        of the 80 theorems that are formalised in Rocq (formerly Coq).
       </p>
       <p>
         Drop me or Freek an email or
@@ -1765,8 +1765,16 @@ Theorem Cauchy_Schwarz_inequality : ∀ (u v : list R) n,
 <p class='axioms'>Axioms used: (none)</p>
 <p class='existing'>Formalized in: ACL2, Coq (constructive), HOL Light, Isabelle, Lean, Metamath, Mizar, NuPRL (constructive), PVS, ProofPower</p></div>
 
-<h3 id='81' class='notformalizedyet'><a href='http://www.cs.ru.nl/~freek/100/#81'>81. Divergence of the Prime Reciprocal Series</a></h3>
+<h3 id='81' class='formalized'><a href='http://www.cs.ru.nl/~freek/100/#81'>81. Divergence of the Prime Reciprocal Series</a></h3>
 <div>
+
+<p class='author'><strong>Lucas Malaizier and Quentin Vermande</strong>
+  (in <a href="https://github.com/Tragicus/analysis/blob/5515349723a482acb1450ee77108dc995563344c/theories/showcase/pnt.v#L412-L413">https://github.com/Tragicus/analysis/blob/5515349723a482acb1450ee77108dc995563344c/theories/showcase/pnt.v#L412-L413</a>):
+</p>
+<p class='comment'></p>
+<pre class='statement'>Theorem dvg_sum_inv_prime_seq (R : realType) :
+  (\sum_(0 &lt;= i &lt; n) (((prime_seq i)%:R : R)^-1)%:E)%R @[n --&gt; \oo] --&gt; +oo%E.
+</pre>
 <p class='existing'>Formalized in: HOL Light, Isabelle, Lean, Metamath, ProofPower</p></div>
 
 <h3 id='82' class='notformalizedyet'><a href='http://www.cs.ru.nl/~freek/100/#82'>82. Dissection of Cubes (J.E. Littlewood’s ‘elegant’ proof)</a></h3>
@@ -2238,8 +2246,8 @@ Lemma mul_adj_mx : forall n (A : &#039;M[R]_n), \adj A *m A = (\det A)%:M.
         sheets[field].disabled = checkbox.checked
       }
       var stats = {
-        "formalized_in_coq": 79,
-        "nb_statements": 97,
+        "formalized_in_coq": 80,
+        "nb_statements": 98,
         "nb_reproducibility_info": 94,
         "nb_axioms_info": 94,
         "nb_constructive_info": 94,
@@ -2248,13 +2256,14 @@ Lemma mul_adj_mx : forall n (A : &#039;M[R]_n), \adj A *m A = (\det A)%:M.
           "no": 41,
           "hypotheses partially classical": 3,
           "to be determined": 1,
-          "undefined": 3,
+          "undefined": 4,
           "no (extensionality)": 1
         },
         "missing_info": [
           "53 https://github.com/Sobernard/Lindemann/blob/master/LindemannTheorem.v",
           "56 https://github.com/Sobernard/Lindemann/blob/master/LindemannTheorem.v",
-          "67 https://github.com/Sobernard/Lindemann/blob/master/LindemannTheorem.v"
+          "67 https://github.com/Sobernard/Lindemann/blob/master/LindemannTheorem.v",
+          "81 https://github.com/Tragicus/analysis/blob/5515349723a482acb1450ee77108dc995563344c/theories/showcase/pnt.v#L412-L413"
         ],
         "constructive_only_here": [
           16,
