@@ -1769,12 +1769,20 @@ Theorem Cauchy_Schwarz_inequality : ∀ (u v : list R) n,
 <div>
 
 <p class='author'><strong>Lucas Malaizier and Quentin Vermande</strong>
-  (in <a href="https://github.com/Tragicus/analysis/blob/5515349723a482acb1450ee77108dc995563344c/theories/showcase/pnt.v#L412-L413">https://github.com/Tragicus/analysis/blob/5515349723a482acb1450ee77108dc995563344c/theories/showcase/pnt.v#L412-L413</a>):
+  (in <a href="https://github.com/math-comp/analysis/blob/5515349723a482acb1450ee77108dc995563344c/theories/showcase/pnt.v#L412-L413">mathcomp</a>):
 </p>
 <p class='comment'></p>
 <pre class='statement'>Theorem dvg_sum_inv_prime_seq (R : realType) :
   (\sum_(0 &lt;= i &lt; n) (((prime_seq i)%:R : R)^-1)%:E)%R @[n --&gt; \oo] --&gt; +oo%E.
 </pre>
+<p class='repro'>Reproducibility: Good (CI)</p>
+<p class='axioms'>Constructive: no</p>
+<p class='axioms'>Axioms used:</p>
+<ul class='axioms'>
+<li>propositional_extensionality</li>
+<li>functional_extensionality_dep</li>
+<li>constructive_indefinite_description</li>
+</ul>
 <p class='existing'>Formalized in: HOL Light, Isabelle, Lean, Metamath, ProofPower</p></div>
 
 <h3 id='82' class='notformalizedyet'><a href='http://www.cs.ru.nl/~freek/100/#82'>82. Dissection of Cubes (J.E. Littlewood’s ‘elegant’ proof)</a></h3>
@@ -2248,22 +2256,21 @@ Lemma mul_adj_mx : forall n (A : &#039;M[R]_n), \adj A *m A = (\det A)%:M.
       var stats = {
         "formalized_in_coq": 80,
         "nb_statements": 98,
-        "nb_reproducibility_info": 94,
-        "nb_axioms_info": 94,
-        "nb_constructive_info": 94,
+        "nb_reproducibility_info": 95,
+        "nb_axioms_info": 95,
+        "nb_constructive_info": 95,
         "constructivity_values": {
           "yes": 48,
-          "no": 41,
+          "no": 42,
           "hypotheses partially classical": 3,
           "to be determined": 1,
-          "undefined": 4,
+          "undefined": 3,
           "no (extensionality)": 1
         },
         "missing_info": [
           "53 https://github.com/Sobernard/Lindemann/blob/master/LindemannTheorem.v",
           "56 https://github.com/Sobernard/Lindemann/blob/master/LindemannTheorem.v",
-          "67 https://github.com/Sobernard/Lindemann/blob/master/LindemannTheorem.v",
-          "81 https://github.com/Tragicus/analysis/blob/5515349723a482acb1450ee77108dc995563344c/theories/showcase/pnt.v#L412-L413"
+          "67 https://github.com/Sobernard/Lindemann/blob/master/LindemannTheorem.v"
         ],
         "constructive_only_here": [
           16,

@@ -1270,10 +1270,16 @@
 
 - theorem: 81
   authors: Lucas Malaizier and Quentin Vermande
-  link: https://github.com/Tragicus/analysis/blob/5515349723a482acb1450ee77108dc995563344c/theories/showcase/pnt.v#L412-L413
+  link: https://github.com/math-comp/analysis/blob/5515349723a482acb1450ee77108dc995563344c/theories/showcase/pnt.v#L412-L413
   statement: |
     Theorem dvg_sum_inv_prime_seq (R : realType) :
       (\sum_(0 <= i < n) (((prime_seq i)%:R : R)^-1)%:E)%R @[n --> \oo] --> +oo%E.
+  reproducibility: Good (CI)
+  constructive: no
+  axioms:
+    - propositional_extensionality
+    - functional_extensionality_dep
+    - constructive_indefinite_description
 
 - theorem: 83
   authors: Alex Loiko
