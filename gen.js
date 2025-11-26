@@ -107,7 +107,7 @@ function count_values(l) {
   return c;
 }
 
-let constructive_at_freeks = Object.entries(existing_proofs).filter(([_, l]) => l.includes("Coq (constructive)")).map(([id, _]) => Number(id));
+let constructive_at_freeks = Object.entries(existing_proofs).filter(([_, l]) => l.includes("Rocq (constructive)")).map(([id, _]) => Number(id));
 let constructive_here = Object.entries(theorems).filter(([_, s]) => s?.statements?.filter(s => s.constructive == 'yes').length > 0).map(([id, _]) => Number(id));
 const array_difference = (s1, s2) => [...s1].filter(x => !s2.includes(x))
 

@@ -38,7 +38,7 @@ main = async() => {
     }
   }
   // data sanity check before overwriting yaml file
-  if(yaml.match(/Coq/g).length >= 50) {
+  if(yaml.match(/Rocq/g).length >= 50) {
     fs.writeFileSync("existing_proofs.yml", yaml);
   } else {
     console.error("HTML dump:");
